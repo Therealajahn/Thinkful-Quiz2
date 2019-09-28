@@ -1,0 +1,18 @@
+body {
+    background-color: #000;
+}
+
+.container{
+    position: absolute;
+    height: 200px;
+    width: 20px;
+    margin-left: 47vw;
+    margin-top: 30vh;
+}
+.triangle{
+    height: 0px;
+    width: 0px;
+    border-bottom: 100px solid #969696;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+}
