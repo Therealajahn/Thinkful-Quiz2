@@ -21,10 +21,8 @@ body {
 
 /*Question */
 
-form{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+.form{
+    position: relative;
     height: 100vh;
     width: 400px;
     background-color: lightgrey;
@@ -35,11 +33,28 @@ form{
     font-weight: 700;
 }
 
-button{
-    margin-top: 10px;
-   
+.flex{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
-#correct, #incorrect, #questions {
+.Submit{
+    position: absolute;
+    height: 10vh;
+    width: 50%;
+    left:0px;
+    bottom: 0;
+}
+
+.Reset{
+    position: absolute;
+    height: 10vh;
+    width: 50%;
+    right: 0px;
+    bottom: 0;
+}
+
+.correct, .incorrect, .questions {
     font-size: 15px;
 }

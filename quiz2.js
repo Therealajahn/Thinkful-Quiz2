@@ -1,33 +1,43 @@
-
-
-function makeContainers() {
-    for(let i = 0; i < 10; i++) {
-        let container = document.createElement('div');
-       container.setAttribute("class", `container js-container-${i}`); 
-        
-       makeTriangles(i); document.body.appendChild(triangle);
-       rotateTriangles(i, triangle);    
-    }
+const stats = {
+    correct:0,
+    incorrect:0,
+    questions:0,
+    questionsDone:0,
 }
 
-function makeTriangles(index) {
-    let triangle = document.createElement('div');
-    triangle.setAttribute("class",`triangle js-triangle-${i}`)
+function makeStats() {
+    stats.questions = STORE.questions.length;
+    stats.questionsDone = 
+    stats.questions - (stats.questions - STORE.index);    
 }
 
-function rotateTriangles(index, triangle) {
-   let angle = index * Math.PI;
-   triangle.style.transform =               "rotate(${angle}deg)";   
-}
+//function makeContainers() {
+//    for(let i = 0; i < 10; i++) {
+//        let container = document.createElement('div');
+//       container.setAttribute("class", `container js-container-${i}`); 
+//        
+//       makeTriangles(i); document.body.appendChild(triangle);
+//       rotateTriangles(i, triangle);    
+//    }
+//}
+//
+//function makeTriangles(index) {
+//    let triangle = document.createElement('div');
+//    triangle.setAttribute("class",`triangle js-triangle-${i}`)
+//}
+//
+//function rotateTriangles(index, triangle) {
+//   let angle = index * Math.PI;
+//   triangle.style.transform =               "rotate(${angle}deg)";   
+//}
 
 
 function incrementQuestions(){
-    console.log(QUESTIONS[0].index);
+    
     $(".Submit").on("click",()=>{
         event.preventDefault();
-        QUESTIONS[0].index++;
-        console.log(QUESTIONS[0].index)
-
+        STORE.index++;
+        makeStats();
         renderQuestions();
     });
     
@@ -37,19 +47,35 @@ function incrementQuestions(){
 
 function renderQuestions() {
     
-    let question = `<header class='js-question question'>${QUESTIONS[QUESTIONS[0].index].question}</header>`
+    let question = `<header class='js-question question'>${STORE.questions[STORE.index].question}</header>`
     
-    $("form").html(question);
+    $(".flex").html(question);
     
-    renderAnswers();
+    renderStats();
+}
+
+function renderStats(){
+    
+    makeStats();
+    
+    let correct = stats.correct;
+    let incorrect = stats.incorrect;
+    let questions = stats.questions;
+    let questionsDone = stats.questionsDone;
+    
+    $(".flex").append(`<p id="correct">${correct} out of ${questions} incorrect</p>
+            <p id="incorrect">${incorrect} out of ${questions} incorrect</p>
+            <p id="questions">${questionsDone} out of ${questions} questions</p>`);
+    
+    renderAnswers(); 
 }
 
 function renderAnswers() {
     
-    let answers = QUESTIONS[QUESTIONS[0].index].answers
+    let answers = STORE.questions[STORE.index].answers
     
     answers.forEach((item)=>{
-        $("form").append(`<input type='radio' name="answers" class="answers" value='A'>${item}<br>`)
+        $(".flex").append(`<input type='radio' name="answers" class="answers" value='A'>${item}<br>`)
     })
     renderButtons();
 }
@@ -57,12 +83,11 @@ function renderAnswers() {
 function renderButtons() {
     
     let buttons = 
-    QUESTIONS[QUESTIONS[0].index].buttons;
+    STORE.questions[STORE.index].buttons;
     
-    $("form").append(`<div class="button-wrap></div>`)
     
     buttons.forEach((item)=>{
-        $(".button-wrap").append(`
+        $("form").append(`
     
     <button class="${item}">${item}</button>`)
     })

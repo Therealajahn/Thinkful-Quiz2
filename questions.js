@@ -1,6 +1,7 @@
-const QUESTIONS = [
-    {index:1},
-    {
+const STORE = {
+    index:0,
+    questions: [
+        {
         question: "Who is the creator of the 2010 record Cosmogramma?",
         answers: ["Cosmo Gramma",
                   "Alphonso “Cosmo” Gramton",
@@ -73,8 +74,11 @@ const QUESTIONS = [
         buttons: ["Submit",
                   "Reset Quiz"]
     },
+        ],
+    
 
-];
-console.log(QUESTIONS[0].question);
+};
+
+
 
     
