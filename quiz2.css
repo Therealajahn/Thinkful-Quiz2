@@ -1,5 +1,7 @@
 body {
     background-color: #000;
+    margin: 0;
+    padding: 0;
 }
 
 .container{
@@ -15,4 +17,29 @@ body {
     border-bottom: 100px solid #969696;
     border-left: 10px solid transparent;
     border-right: 10px solid transparent;
+}
+
+/*Question */
+
+form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100vh;
+    width: 400px;
+    background-color: lightgrey;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    font-size: 25px;
+    font-weight: 700;
+}
+
+button{
+    margin-top: 10px;
+   
+}
+
+#correct, #incorrect, #questions {
+    font-size: 15px;
 }
