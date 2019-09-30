@@ -28,6 +28,8 @@ body {
     background-color: lightgrey;
     margin-left: auto;
     margin-right: auto;
+}
+.js-question{
     text-align: center;
     font-size: 25px;
     font-weight: 700;
@@ -57,4 +59,5 @@ body {
 
 .correct, .incorrect, .questions {
     font-size: 15px;
+    text-align: center;
 }
