@@ -6,9 +6,11 @@ const stats = {
 }
 
 function makeStats() {
+    
     stats.questions = STORE.questions.length;
+    
     stats.questionsDone = 
-    stats.questions - (stats.questions - STORE.index);    
+    (stats.questions + 1)- (stats.questions - STORE.index);    
 }
 
 //function makeContainers() {
@@ -32,13 +34,21 @@ function makeStats() {
 //}
 
 
-function incrementQuestions(){
+function handleSubmit(){
     
     $(".Submit").on("click",()=>{
         event.preventDefault();
-        STORE.index += 1;
-        makeStats();
-        renderQuestions();
+        if(stats.questionsDone < stats.questions)
+    
+        if(stats.currentAnswer ===
+          "correct") {
+            renderCorrectResponse();
+        }else{
+            renderIncorrectResponse();
+        }
+//        renderStats();
+//        renderQuestions();
+        
     });
     
     
@@ -51,9 +61,23 @@ function renderQuestions() {
     
     $(".flex").html(question);
     
-    renderStats();
+    renderAnswers();
 }
 
+function renderAnswers() {
+    
+    let answers = STORE.questions[STORE.index].answers
+    
+    $(".flex").append('<div class="answers"></div>')
+    
+    answers.forEach((item,index)=>{
+        $(".answers").append(`
+<input type='radio' name="answers" value='A' id="option${index}" ><label for="option${index}">${item}</label><br>`)
+    })
+            
+    renderStats();
+};
+                     
 function renderStats(){
     
     makeStats();
@@ -63,24 +87,14 @@ function renderStats(){
     let questions = stats.questions;
     let questionsDone = stats.questionsDone;
     
-    $(".flex").append(`<p class="correct">${correct} out of ${questions} correct</p>
+    $("form").append("<div class='js-stats'></div>")
+    
+    $(".js-stats").html(`<p class="correct">${correct} out of ${questions} correct</p>
             <p class="incorrect">${incorrect} out of ${questions} incorrect</p>
             <p class="questions">${questionsDone} out of ${questions} questions</p>`);
     
-    renderAnswers(); 
+     renderButtons();
 }
-
-function renderAnswers() {
-    
-    let answers = STORE.questions[STORE.index].answers
-    
-    answers.forEach((item)=>{
-        $(".flex").append(`<div class="answers">
-<input type='radio' name="answers" value='A'><label for="answers">${item}</label>\</div>`)
-    })
-    renderButtons();
-}
-
 function renderButtons() {
     
     let buttons = 
@@ -92,9 +106,44 @@ function renderButtons() {
     
     <button class="${item}">${item}</button>`)
     })
-    incrementQuestions();
+    handleSubmit();
 }
+
+function checkAnswers() {
+    
+    $(".answers").on("click",()=>{
+        let inputId = $(event.target).attr('id');
+        stats.label = $(`label[for='${inputId}']`).html();     
+        let correctAnswer = STORE.questions[STORE.index].correctAnswer;    
+
+        if(stats.label === correctAnswer){
+            stats.currentAnswer = "correct";
+
+        }else{
+            stats.currentAnswer = "incorrect";
+        }
+    });
+    
+    
+};
+
+function renderCorrectResponse(){
+    
+    $("form").addClass("js-turn-blue");
+    $("form").html(` <header class='js-question question'>:</header>`);
+    stats.responseRendered = true;
+    
+    
+}
+
+function renderIncorrectResponse() {
+    
+    $("form").addClass("js-turn-red");
+    stats.responseRendered = true;
+}
+
 
 $(()=>{
     renderQuestions();
+    checkAnswers();
 })
