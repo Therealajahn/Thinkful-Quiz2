@@ -52,48 +52,28 @@ function renderAnswers() {
 <input type='radio' name="answers" value='A' id="option${index}" ><label for="option${index}">${item}</label><br>`)
     })
             
-    renderStats();
+    
 };
                      
-function renderStats(){
-    
-    makeStats();
-    
-    let correct = stats.correct;
-    let incorrect = stats.incorrect;
-    let questions = stats.questions;
-    let questionsDone = stats.questionsDone;
-    
-    $("form").append("<div class='js-stats'></div>")
-    
-    $(".js-stats").html(`<p class="correct">${correct} out of ${questions} correct</p>
-            <p class="incorrect">${incorrect} out of ${questions} incorrect</p>
-            <p class="questions">${questionsDone} out of ${questions} questions</p>`);
-    
-     renderButtons();
-}
-function renderButtons() {
-    
-    let buttons = 
-    STORE.questions[STORE.index].buttons;
-    
-    
-    buttons.forEach((item)=>{
-        $("form").append(`
-    
-    <button class="${item}">${item}</button>`)
-    })
-    handleSubmit();
-}
 
-function renderQuestions() {
-    console.log("renderQuestionsStatic");
-    let options = STORE.questions[STORE.index].answers.map((question, i) => (
+
+
+function renderOptions(){
+   console.log("renderOptions");
+    return(
+       STORE.questions[STORE.index].answers.map((question, i) => (
     `<div>
             <input type="radio" name="answers" value="A" id="option${i}">
             <label for="option${i}">${question}</label><br>
     </div>`
-    ))
+    )).join('')
+       );
+}
+
+function renderQuestions() {
+    console.log("renderQuestionsStatic");
+//    makeStats();
+    
     $("body").html(
         
             `<form class="form">
@@ -102,7 +82,7 @@ function renderQuestions() {
                
             <div class="answers">
 
-            ${options.join('')}
+            ${renderOptions()}
             
         </div>
 
