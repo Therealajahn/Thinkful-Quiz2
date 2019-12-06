@@ -45,7 +45,8 @@ function handleSubmit(){
           "correct") {
             renderCorrectResponse();
             stats.correct += 1;
-        }else{
+        }else if(stats.currentAnswer ===
+          "incorrect"){
             renderIncorrectResponse();
             stats.incorrect += 1;
         }
