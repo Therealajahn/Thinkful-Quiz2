@@ -3,36 +3,54 @@ const stats = {
     incorrect:0,
     questions:0,
     questionsDone:0,
+    currentAnswer:"",
 }
 
 function makeStats() {
     console.log("makeStats");
     stats.questions = STORE.questions.length;
-    
     stats.questionsDone = 
     (stats.questions + 1)- (stats.questions - STORE.index);    
 }
 
 
 
+function checkAnswers() {
+    console.log("checkAnswers");
+    $(".answers").on("click",()=>{
+        let inputId = $(event.target).attr('id');
+        stats.label = $(`label[for='${inputId}']`).html();     
+        let correctAnswer = STORE.questions[STORE.index].correctAnswer;    
+
+        if(stats.label === correctAnswer){
+            stats.currentAnswer = "correct";
+    
+
+        }else{
+            stats.currentAnswer = "incorrect";
+        }
+        
+    });
+    handleSubmit();
+    
+};
 
 function handleSubmit(){
     console.log("handleSubmit");
-    $(".Submit").on("click",event =>{
+    $(".Submit").on("click", event =>{
      event.preventDefault();
          
     
         if(stats.currentAnswer ===
           "correct") {
             renderCorrectResponse();
-            stats.correct =+ 1;
+            stats.correct += 1;
         }else{
             renderIncorrectResponse();
-            stats.incorrect =+ 1
+            stats.incorrect += 1;
         }
        console.log("handleSubmit",stats);
-//        renderStats();
-//        renderQuestions();
+
      renderQuestions();    
     });
     
@@ -84,28 +102,11 @@ function renderQuestions() {
  
  </form>`              
     );
+    makeStats();
     checkAnswers();
-    handleSubmit();
 }
 
-function checkAnswers() {
-    console.log("checkAnswers");
-    $(".answers").on("click",()=>{
-        let inputId = $(event.target).attr('id');
-        stats.label = $(`label[for='${inputId}']`).html();     
-        let correctAnswer = STORE.questions[STORE.index].correctAnswer;    
 
-        if(stats.label === correctAnswer){
-            stats.currentAnswer = "correct";
-
-        }else{
-            stats.currentAnswer = "incorrect";
-        }
-        console.log("check-answers",stats);
-    });
-    
-    
-};
 
 function renderCorrectResponse(){
     console.log("renderCorrectResponse");
