@@ -8,9 +8,8 @@ const stats = {
 
 function makeStats() {
     console.log("makeStats");
-    stats.questions = STORE.questions.length;
-    stats.questionsDone = 
-    (stats.questions + 1)- (stats.questions - STORE.index);    
+    stats.questions = STORE.questions.length; 
+    stats.questionsDone = 1 + STORE.index;
 }
 
 
@@ -26,7 +25,7 @@ function checkAnswers() {
             stats.currentAnswer = "correct";
     
 
-        }else{
+        }else if(stats.label !== correctAnswer){
             stats.currentAnswer = "incorrect";
         }
         
@@ -40,7 +39,7 @@ function handleSubmit(){
     $(".Submit").on("click", event =>{
      event.preventDefault();
          
-    
+      
         if(stats.currentAnswer ===
           "correct") {
             renderCorrectResponse();
@@ -50,6 +49,9 @@ function handleSubmit(){
             renderIncorrectResponse();
             stats.incorrect += 1;
         }
+        
+        STORE.index += 1;
+        stats.currentAnswer = "";
        console.log("handleSubmit",stats);
 
      renderQuestions();    
@@ -74,7 +76,7 @@ function renderOptions(){
 
 function renderQuestions() {
     console.log("renderQuestionsStatic");
-//    makeStats();
+makeStats();
     
     $("body").html(
         
@@ -93,7 +95,7 @@ function renderQuestions() {
           <div>
             <p class="correct">${stats.correct} out of 10 correct</p>
             <p class="incorrect">${stats.incorrect} out of 10 incorrect</p>
-            <p class="questions">${stats.questions} out of 10 questions</p>
+            <p class="questions">${stats.questionsDone} out of 10 questions</p>
           </div>
         </div>
     
@@ -103,7 +105,7 @@ function renderQuestions() {
  
  </form>`              
     );
-    makeStats();
+    
     checkAnswers();
 }
 
