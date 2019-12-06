@@ -25,32 +25,34 @@ body {
     position: relative;
     height: 80vh;
     width: 400px;
-    background-color: lightgrey;
+    background-color: #454443;
     margin-top: 10vh;
     margin-left: auto;
     margin-right: auto;
 }
 .js-question{
     text-align: center;
-    font-size: 25px;
+    font-size: 30px;
+    color: white;
     font-weight: 700;
     margin-top: 10px;
 }
 
 .answers{
-    margin-top: 10%;
-    margin-left: 10px;
-    margin-right: 10px;
-}
-
-.option{
-    margin-top: 10px;
-}
-
-.flex{
     display: flex;
+    position: absolute;
     flex-direction: column;
     justify-content: center;
+    height: 200px;
+    width: 100%;
+    background-color: #a19f9f; 
+    margin-right: 10px;
+    font-size: 20px;
+    color: white;
+}
+
+.answers div {
+    margin-left: 50px;
 }
 
 .Submit{
@@ -59,31 +61,53 @@ body {
     width: 50%;
     left:0px;
     bottom: 0;
+    border: none;
+    background-color: #fff;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 25px;
+    font-weight: 700;
+    cursor: pointer;
 }
-
+.Submit:hover{
+    background-color: #000;
+    color: #fff;
+}
 .Reset{
     position: absolute;
     height: 10vh;
     width: 50%;
-    right: 0px;
+    left:200px;
     bottom: 0;
-}
-
-.js-stats {
-    position: absolute;
-    bottom: 80px;
-    font-size: 15px;
+    border: 5px solid #fff;
+    color: #fff;
+    background-color: #000;
+    padding: 15px 32px;
     text-align: center;
-    margin-left: 36%;
-    
+    text-decoration: none;
+    display: inline-block;
+    font-size: 25px;
+    font-weight: 700;
 }
 
-/*Correct*/
-
-.js-turn-blue{
-    background-color: aquamarine;
+.Reset:hover{
+    background-color: #fff;
+    color: #000;
+    border: 5px solid #000;
 }
 
-.js-turn-red{
-    background-color: darkred;
+.stats {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    width: 100%;
+    height: 200px;
+    font-size: 20px;
+    text-align: center;
+    margin-top: 200px;
+    background-color: #cccccc;
 }
+
+s

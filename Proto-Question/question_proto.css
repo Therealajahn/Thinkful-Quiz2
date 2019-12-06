@@ -110,12 +110,3 @@ body {
     background-color: #cccccc;
 }
 
-/*Correct*/
-
-.js-turn-blue{
-    background-color: aquamarine;
-}
-
-.js-turn-red{
-    background-color: darkred;
-}
