@@ -3,7 +3,7 @@ const stats = {
     incorrect:0,
     questions:0,
     questionsDone:0,
-    currentAnswer:"",
+    currentAnswer:"no answer",
 }
 
 function makeStats() {
@@ -42,19 +42,18 @@ function handleSubmit(){
       
         if(stats.currentAnswer ===
           "correct") {
-            renderCorrectResponse();
             stats.correct += 1;
+            renderCorrectResponse();
         }else if(stats.currentAnswer ===
           "incorrect"){
-            renderIncorrectResponse();
             stats.incorrect += 1;
+            renderIncorrectResponse();
         }
         
-        STORE.index += 1;
-        stats.currentAnswer = "";
+       stats.currentAnswer = "";
        console.log("handleSubmit",stats);
 
-     renderQuestions();    
+         
     });
     
    
@@ -77,12 +76,12 @@ function renderOptions(){
 function renderQuestions() {
     console.log("renderQuestionsStatic");
 makeStats();
-    
-    $("body").html(
+    $(".form").empty();
+    $(".form").html(
         
-            `<form class="form">
+            
         
-            <header class="js-question  question">${STORE.questions[STORE.index].question}</header>
+            `<header class="js-question  question">${STORE.questions[STORE.index].question}</header>
                
             <div class="answers">
 
@@ -109,22 +108,81 @@ makeStats();
     checkAnswers();
 }
 
-
+function handleMoveOnClick(){
+    $(".move-on").on("click",()=>{
+        event.preventDefault();
+        STORE.index += 1;
+        renderQuestions();
+    })
+    
+}
 
 function renderCorrectResponse(){
     console.log("renderCorrectResponse");
-//    $("form").addClass("js-turn-blue");
-//    $("form").html(` <header class='js-question question'>:</header>`);
-    stats.responseRendered = true;
+     STORE.status = "aside";
+     STORE.questions[STORE.index].question.response 
+    $(".form").empty();
+     $(".form").html(
+        
+            `
+            <header class="js-question  question">Correct</header>
+               
+            <div class="answers">
+
+            
+            
+        </div>
+
+      <div class="js-stats stats">
+          <div>
+            <p class="correct">${stats.correct} out of 10 correct</p>
+            <p class="incorrect">${stats.incorrect} out of 10 incorrect</p>
+            <p class="questions">${stats.questionsDone} out of 10 questions</p>
+          </div>
+        </div>     
+        
     
+    <button class="move-on">Move On</button>
     
+    <button class="Reset Quiz">Reset </button>
+    `              
+    );
+   handleMoveOnClick();
+   
 }
 
 function renderIncorrectResponse() {
     console.log("renderIncorrectResponse");
-    $("form").addClass("js-turn-red");
-    stats.responseRendered = true;
+     $(".form").empty();
+     $(".form").html(
+        
+        `<header class="js-question  question">Wrong</header>
+               
+        <div class="answers">
+
+            Wrong
+            
+        </div>
+
+        <div class="js-stats stats">
+          <div>
+            <p class="correct">${stats.correct} out of 10 correct</p>
+            <p class="incorrect">${stats.incorrect} out of 10 incorrect</p>
+            <p class="questions">${stats.questionsDone} out of 10 questions</p>
+          </div>
+        </div>
+           
+        
+    
+    <button class="move-on">Move On</button>
+    
+    <button class="Reset Quiz">Reset </button>
+    `              
+    );
+   handleMoveOnClick();
 }
+
+
 
 
 $(()=>{

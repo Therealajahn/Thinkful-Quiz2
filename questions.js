@@ -1,5 +1,6 @@
 const STORE = {
     index:0,
+    status:"question",
     questions: [
         {
         question: "Who is the creator of the 2010 record Cosmogramma?",
