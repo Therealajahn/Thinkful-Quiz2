@@ -33,31 +33,14 @@ function handleSubmit(){
        console.log("handleSubmit",stats);
 //        renderStats();
 //        renderQuestions();
-        
+     renderQuestions();    
     });
     
-   renderQuestions(); 
+   
 }
 
 
-
-function renderAnswers() {
-    
-    let answers = STORE.questions[STORE.index].answers
-    
-    $(".flex").append('<div class="answers"></div>')
-    
-    answers.forEach((item,index)=>{
-        $(".answers").append(`
-<input type='radio' name="answers" value='A' id="option${index}" ><label for="option${index}">${item}</label><br>`)
-    })
-            
-    
-};
-                     
-
-
-
+                    
 function renderOptions(){
    console.log("renderOptions");
     return(
@@ -101,6 +84,8 @@ function renderQuestions() {
  
  </form>`              
     );
+    checkAnswers();
+    handleSubmit();
 }
 
 function checkAnswers() {
@@ -140,6 +125,4 @@ function renderIncorrectResponse() {
 
 $(()=>{
     renderQuestions();
-    checkAnswers();
-    handleSubmit();
 })
