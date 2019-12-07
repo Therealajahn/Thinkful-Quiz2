@@ -4,6 +4,7 @@ const stats = {
     questions:0,
     questionsDone:0,
     currentAnswer:"no answer",
+    score:100,
 }
 
 function makeStats() {
@@ -23,10 +24,11 @@ function checkAnswers() {
 
         if(stats.label === correctAnswer){
             stats.currentAnswer = "correct";
-    
+            
 
         }else if(stats.label !== correctAnswer){
             stats.currentAnswer = "incorrect";
+            stats.score -= 10;
         }
         
     });
@@ -38,19 +40,25 @@ function handleSubmit(){
     console.log("handleSubmit");
     $(".Submit").on("click", event =>{
      event.preventDefault();
-         
-      
-        if(stats.currentAnswer ===
-          "correct") {
-            stats.correct += 1;
-            renderCorrectResponse();
-        }else if(stats.currentAnswer ===
-          "incorrect"){
-            stats.incorrect += 1;
-            renderIncorrectResponse();
-        }
+         console.log("store index:",STORE.index);
+        if(STORE.index === (STORE.questions.length - 1)){
+            endOfQuiz();
+        }else{
+            if(stats.currentAnswer ===
+              "correct") {
+                stats.correct += 1;
+                renderCorrectResponse();
+            }else if(stats.currentAnswer ===
+              "incorrect"){
+                stats.incorrect += 1;
+                renderIncorrectResponse();
+            }else if(stats.currentAnswer ===
+                    "no answer"){
+                renderNoAnswer();
+            }
+        };
         
-       stats.currentAnswer = "";
+       stats.currentAnswer = "no answer";
        console.log("handleSubmit",stats);
 
          
@@ -65,10 +73,10 @@ function renderOptions(){
    console.log("renderOptions");
     return(
        STORE.questions[STORE.index].answers.map((question, i) => (
-    `<div>
+    `<section>
             <input type="radio" name="answers" value="A" id="option${i}">
             <label for="option${i}">${question}</label><br>
-    </div>`
+    </section>`
     )).join('')
        );
 }
@@ -83,24 +91,25 @@ makeStats();
         
             `<header class="js-question  question">${STORE.questions[STORE.index].question}</header>
                
-            <div class="answers">
+            <section class="answers">
 
             ${renderOptions()}
             
-        </div>
+        </section>
 
            
-        <div class="js-stats stats">
-          <div>
+        <footer class="js-stats stats">
+          <section>
             <p class="correct">${stats.correct} out of 10 correct</p>
             <p class="incorrect">${stats.incorrect} out of 10 incorrect</p>
             <p class="questions">${stats.questionsDone} out of 10 questions</p>
-          </div>
-        </div>
+            <p class="score">Score:${stats.score}%</p>
+          </section>
+        </footer>
     
     <button class="Submit">Submit</button>
     
-    <button class="Reset Quiz">Reset </button>
+   
  
  </form>`              
     );
@@ -129,7 +138,7 @@ function renderCorrectResponse(){
                
             <div class="answers">
 
-            
+            You got it!
             
         </div>
 
@@ -138,13 +147,14 @@ function renderCorrectResponse(){
             <p class="correct">${stats.correct} out of 10 correct</p>
             <p class="incorrect">${stats.incorrect} out of 10 incorrect</p>
             <p class="questions">${stats.questionsDone} out of 10 questions</p>
+            <p class="score">Score:${stats.score}%</p>
           </div>
         </div>     
         
     
     <button class="move-on">Move On</button>
     
-    <button class="Reset Quiz">Reset </button>
+  
     `              
     );
    handleMoveOnClick();
@@ -156,11 +166,49 @@ function renderIncorrectResponse() {
      $(".form").empty();
      $(".form").html(
         
-        `<header class="js-question  question">Wrong</header>
+        `<header class="js-question  question">Incorrect</header>
                
         <div class="answers">
 
-            Wrong
+            Im gonna have to dock ya 10 points.
+            
+        </div>
+
+        <div class="js-stats stats">
+          <div>
+            <p class="end-result">${stats.correct} out of 10 correct</p>
+            <p class="end-result">${stats.incorrect} out of 10 incorrect</p>
+            <p class="end-result">${stats.questionsDone} out of 10 questions</p>
+            <p class="end-result">Score:${stats.score}%</p>          
+           </div>
+        </div>
+           
+        
+    
+    <button class="move-on">Move On</button>
+    
+
+    `              
+    );
+   handleMoveOnClick();
+}
+
+function handleGoBackClick(){
+    $(".go-back").on("click", () => {
+        renderQuestions();
+    })
+}
+
+function renderNoAnswer() {
+    console.log("renderNoResponse");
+     $(".form").empty();
+     $(".form").html(
+        
+        `<header class="js-question  question">Not So Fast</header>
+               
+        <div class="answers">
+
+            Please chooose an option, bud
             
         </div>
 
@@ -169,17 +217,45 @@ function renderIncorrectResponse() {
             <p class="correct">${stats.correct} out of 10 correct</p>
             <p class="incorrect">${stats.incorrect} out of 10 incorrect</p>
             <p class="questions">${stats.questionsDone} out of 10 questions</p>
-          </div>
+            <p class="score">Score:${stats.score}%</p>
+           </div>
         </div>
            
         
     
-    <button class="move-on">Move On</button>
+    <button class="go-back">Go Back</button>
     
-    <button class="Reset Quiz">Reset </button>
+    
     `              
     );
-   handleMoveOnClick();
+   handleGoBackClick();
+}
+
+function endOfQuiz(){
+   console.log("endOfQuiz")
+    $(".form").empty();
+     $(".form").html(
+        
+        `<header class="js-question  question">You Finished</header>
+
+
+        <div class="js-stats-end stats-end">
+          <div>
+            <h1 class="score">Score:${stats.score}%</h1>
+            <h2 class="correct">${stats.correct} out of 10 correct</h2>
+            <h2 class="incorrect">${stats.incorrect} out of 10 incorrect</h2>
+           </div>
+          <p> To be fair, this quiz was pretty obscure
+        </div>
+           
+        
+    
+
+    
+    <button class="Reset Quiz">Reset Quiz</button>
+    `              
+    );
+   
 }
 
 
