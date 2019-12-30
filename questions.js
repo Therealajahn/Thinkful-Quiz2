@@ -50,7 +50,7 @@ const STORE = {
      {
         question: "What is the source of the album cover art?",
         answers: ["It was drawn by an AI that draws pictures based on the songs it’s played",
-                  "Steven Ellison drew it for a school trip where he showed it to eil deGrasse Tyson",
+                  "Steven Ellison drew it for a school trip where he showed it to Neil deGrasse Tyson",
                   "It’s from a real, not made up book called the Codex Tor",
                   "It’s not a real album"],
         correctAnswer:"It’s from a real, not made up book called the Codex Tor",
